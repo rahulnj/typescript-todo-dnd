@@ -26,11 +26,11 @@ const SingleTodo = ({ todo, todos, setTodos }: Props) => {
     return (
         <form className='singletodo'>
             {
-                todo.isDone ? <span className='singletodo_text'>
+                todo.isDone ? <s className='singletodo_text'>
                     {todo.todo}
-                </span> : <s className='singletodo_text'>
+                </s> : <span className='singletodo_text'>
                     {todo.todo}
-                </s>
+                </span>
             }
 
             <div className='sigletodo_icons'>
