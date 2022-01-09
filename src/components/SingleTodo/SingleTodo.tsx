@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Todo } from '../../model'
 import './SingleTodo.css'
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
@@ -12,6 +12,9 @@ type Props = {
 }
 
 const SingleTodo = ({ todo, todos, setTodos }: Props) => {
+    const [edit, setEdit] = useState<boolean>(false);
+    const [editTodo, setEditTodo] = useState<string | number>(todo.todo)
+
     const handleDone = (id: number) => {
         console.log(todos);
 
@@ -22,20 +25,41 @@ const SingleTodo = ({ todo, todos, setTodos }: Props) => {
         )
     }
 
+    const handleDelete = (id: number) => {
+        setTodos(
+            todos.filter((todo) => (todo.id !== id))
+        )
+    }
+    const handleEdit = (e: React.FormEvent, id: number) => {
+        e.preventDefault()
+        setTodos(
+            todos.map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
+        )
+        setEdit(false)
+    }
 
     return (
-        <form className='singletodo'>
+        <form className='singletodo' onSubmit={(e) => handleEdit(e, todo.id)}>
             {
-                todo.isDone ? <s className='singletodo_text'>
-                    {todo.todo}
-                </s> : <span className='singletodo_text'>
-                    {todo.todo}
-                </span>
+                edit ? (<input value={editTodo} onChange={(e) => setEditTodo(e.target.value)} />) :
+                    todo.isDone ? <s className='singletodo_text'>
+                        {todo.todo}
+                    </s> : <span className='singletodo_text'>
+                        {todo.todo}
+                    </span>
+
             }
 
+
+
+
             <div className='sigletodo_icons'>
-                <span><AiOutlineEdit /></span>
-                <span><AiOutlineDelete /></span>
+                <span onClick={() => {
+                    if (!edit && !todo.isDone) {
+                        setEdit(!edit)
+                    }
+                }}><AiOutlineEdit /></span>
+                <span onClick={() => handleDelete(todo.id)}><AiOutlineDelete /></span>
                 <span onClick={() => handleDone(todo.id)}><TiTick /></span>
             </div>
         </form>
