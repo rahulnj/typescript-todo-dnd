@@ -1,0 +1,24 @@
+.todolist{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100vw;
+    height: 100%;
+    gap: 0 10px;
+}
+
+.active-todolist{
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+border: 3px dashed red;
+    width: 50%;
+}
+
+.completed-todolist{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  border: 3px dashed green;
+    width: 50%;
+}
